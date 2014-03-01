@@ -1,0 +1,84 @@
+table.SimpleCalendar {
+	border-collapse: collapse;
+	width: 99%;
+	margin: 0 auto;
+}
+
+table.SimpleCalendar th {
+	text-align:center;
+	background: #C9E9F0;
+	color: #0092B4;
+	padding: 9px 2px 7px 2px;
+	border: 1px solid #bbb;
+	border-bottom: 2px solid #bbb;
+}
+
+table.SimpleCalendar tbody td {
+	vertical-align: top;
+	width: 90px;
+	height: 90px;
+	border: 1px solid #bbb;
+	background: #f1f1f1;
+}
+
+table.SimpleCalendar tbody td time {
+	font-size: .8em;
+	display: block;
+	background: white;
+	padding: 2px;
+	text-align: right;
+	font-weight: bold;
+}
+
+table.SimpleCalendar tbody td.SCsuffix,table.SimpleCalendar tbody td.SCprefix
+	{
+	background: white;
+}
+
+table.SimpleCalendar tbody td div.event {
+	color: #355;
+	font-size: .9em;
+	margin: 2px;
+	padding: 3px;
+	line-height: 1.2em;
+	border-bottom: 1px solid #bbb;
+	background: #858585;
+	color: white;
+	border-radius: 3px;
+}
+
+table.SimpleCalendar tbody td div.event.hasDetails {
+	cursor: pointer;
+}
+
+table.SimpleCalendar tbody td div.event.hasPrevious {
+	margin-left: 0;
+	border-radius: 0 3px 3px 0;
+}
+
+table.SimpleCalendar tbody td div.event.hasNext {
+	margin-right: 0;
+	border-radius: 3px 0 0 3px;
+}
+
+table.SimpleCalendar tbody td div.event.hasPrevious.hasNext {
+	border-radius: 0;
+}
+
+table.SimpleCalendar tbody td div.event .eventdetails {
+	display: none;
+	line-height: 1em;
+	font-size: .8em;
+	font-style: italic;
+	border-top: 1px dashed lightgrey;
+	margin-top: 10px;
+	padding-top: 5px;
+}
+
+table.SimpleCalendar tbody td div.event:hover .eventdetails {
+	display: inline-block;
+}
+
+table.SimpleCalendar tbody td.today {
+	background: #D1D1D1;
+}
