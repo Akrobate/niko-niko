@@ -74,8 +74,6 @@ class MyMail {
 			  foreach($emails as $email_number) {
 
 				//var_dump($overview);
-
-
 				$overview = imap_fetch_overview($inbox,$email_number,0);
 				$data['message'] = imap_fetchbody($inbox,$email_number,2);
 				$data['date'] = $overview[0]->date;
@@ -86,9 +84,6 @@ class MyMail {
 				preg_match('#<(.*)>#', $data['from'], $data['from']) ;
 				$data['from'] = trim($data['from'][1]);
 				$res[] = $data;
-	
-				
-	
 			  }
 			}
 
@@ -100,6 +95,47 @@ class MyMail {
 			//rsort($emails);
 
 	}
+	
+	
+	
+	public function getAllAndRemove($realydelete = true) {
+		$res = array();
+
+		/* try to connect */
+		$inbox = imap_open($this->hostname,$this->username,$this->password)
+			or die('Cannot connect to mailbox: ' . imap_last_error());
+			
+		$emails = imap_search($inbox,'ALL');
+		
+		if ($emails) {
+	
+		  foreach($emails as $email_number) {
+
+			$overview = imap_fetch_overview($inbox,$email_number,0);
+			$data['message'] = imap_fetchbody($inbox,$email_number,2);
+			$data['date'] = $overview[0]->date;
+			$data['from'] = $overview[0]->from;
+			$data['subject'] = $overview[0]->subject;
+			
+			preg_match('#<(.*)>#', $data['from'], $data['from']) ;
+			$data['from'] = trim($data['from'][1]);
+			$res[] = $data;
+			if ($realydelete) {
+				imap_delete($inbox, $email_number);				
+			}
+		  }
+		}
+		
+		if ($realydelete) {
+			imap_expunge($inbox);
+		}
+		
+
+		imap_close($inbox);
+
+		return $res;
+	}
+	
 	
 	
 	
