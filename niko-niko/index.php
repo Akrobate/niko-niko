@@ -1,87 +1,30 @@
-<html>
-	<head>
-
-		<link rel="stylesheet" href="css/SimpleCalendar.css" type="text/css" />
-
-	</head>
-<body>
-
 <?php
-
-	include("libs/lib.php");
-	include("libs/calendar.class.php");
-	include("libs/smiley.class.php");
+	session_start();
+	error_reporting(15);
+	require_once("./api.php");
 	
+	$controller = request::get("controller");
+	$action = request::get("action");
 	
-	
-	
-
-
-	/*** MAIN ***/
-
-	$calendar = new donatj\SimpleCalendar();
-	
-	
-	$mailbox = new MyMail();
-	$msgs = $mailbox->getNew();
-	//print_r($msgs = $mailbox->getNew());
-
-	$ht = "";
-	
-	foreach($msgs as $m) {
-		
-		//print_r($m);
-		//echo($m['date'] . "<br>");
-		
-		//$m['message']
-	//	echo($m['subject']);
-		//MySmiley::str2smiley($m['subject'], true);
-		if(MySmiley::str2smiley($m['subject'], false)) {
-		//	$calendar->addDailyHtml(MySmiley::str2smiley($m['subject'], false) ,  'today', 'today'  );
-			$ht .= MySmiley::str2smiley($m['subject'], false) ;
-		}
-	
+	if ($controller == "") {
+		$controller = "calendars";
 	}
-	$dd = "today";
-	$dd = "Sat, 1 Mar 2014 01:58:07 +0100";
 	
-	$calendar->addDailyHtml($ht ,  $dd, $dd  );
-		//$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false) , '2014-02-19', '2014-02-19' );
-
-
-	$calendarHTML = $calendar->show(false);
-
-	/*
-	$calendar = new donatj\SimpleCalendar();
-	$calendar->setStartOfWeek('Sunday');
+	if($action == "") {
+		$action = "index";
+	}
 	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-)", false), 'yesterday', 'yesterday' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-|", false), 'yesterday', 'yesterday' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false), 'yesterday', 'yesterday' );
-	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-)", false), 'today', 'today' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-|", false), 'today', 'today' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false), 'today', 'today' );
-	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false) 
-							. MySmiley::str2smiley(":-|", false)
-							. MySmiley::str2smiley(":-)", false)
-							. MySmiley::str2smiley(":-(", false), 'today', 'today' );
-	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false) 
-						. MySmiley::str2smiley(":-|", false)
-						. MySmiley::str2smiley(":-)", false)
-						. MySmiley::str2smiley(":-(", false), '2014-02-19', '2014-02-19' );
+	if ((file_exists(PATH_SCRIPTS . $controller . "/" . $action . ".php")) 
+		&& ((PATH_TEMPLATES . $controller . "/" . $action . ".php"))) {
+			require_once (PATH_SCRIPTS . $controller . "/" . $action . ".php");
+			ob_start();
+				require_once (PATH_TEMPLATES . $controller . "/" . $action . ".php");
+			//$template_content = ob_get_contents();
+			$template_content = ob_get_contents();
+			ob_end_clean();
+			
+			require_once( PATH_TEMPLATES . "layouts/main.php");	
+	} else {
+		echo("ERROR::Template or script missing");
+	}
 
-	
-	$calendarHTML = $calendar->show(false);
-	*/
-	
-?>
-
-<div style="width:1224px; margin-left: auto; margin-right:auto;">
-
-	<?=$calendarHTML?>
-</div>
-
-</html>

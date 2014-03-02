@@ -3,23 +3,28 @@
 
 class MyMail {
 
+	private $hostname;
+	private $username;
+	private $password;
+
+
+	function __construct() {
+		
+		$this->hostname = MAIL_HOST;
+		$this->username = MAIL_USER;
+		$this->password = MAIL_PASSWORD;
 
 	
+	}	
 
 
 	public static function getNewDebug() {
 
-		$hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
-		$username = 'chess.master.0002@gmail.com';
-		$password = 'Kzen=813;';
-
-		/* try to connect */
-		$inbox = imap_open($hostname,$username,$password) or die('Cannot connect to Gmail: ' . imap_last_error());
+		$inbox = imap_open($this->hostname,$this->username,$this->password) 
+			or die('Cannot connect to Gmail: ' . imap_last_error());
 
 		var_dump($inbox);
 		
-		
-		/* grab emails */
 		$emails = imap_search($inbox,'ALL');
 
 		/* if emails are returned, cycle through each... */
@@ -51,39 +56,38 @@ class MyMail {
 		/* close the connection */
 		imap_close($inbox);
 
-
-		/* put the newest emails on top */
-		//rsort($emails);
-
 	}
 	
 	
 	
 	
-		public static function getNew() {
-
-			$hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
-			$username = 'chess.master.0002@gmail.com';
-			$password = 'Kzen=813;';
+		public function getNew() {
 
 			$res = array();
 
 			/* try to connect */
-			$inbox = imap_open($hostname,$username,$password) or die('Cannot connect to Gmail: ' . imap_last_error());
+			$inbox = imap_open($this->hostname,$this->username,$this->password) or die('Cannot connect to Gmail: ' . imap_last_error());
 			$emails = imap_search($inbox,'ALL');
 			
 			if ($emails) {
 		
 			  foreach($emails as $email_number) {
 
+				//var_dump($overview);
+
+
 				$overview = imap_fetch_overview($inbox,$email_number,0);
 				$data['message'] = imap_fetchbody($inbox,$email_number,2);
 				$data['date'] = $overview[0]->date;
 				$data['from'] = $overview[0]->from;
 				$data['subject'] = $overview[0]->subject;
-	
+				$data['id'] = $overview[0]->message_id;
+				
+				preg_match('#<(.*)>#', $data['from'], $data['from']) ;
+				$data['from'] = trim($data['from'][1]);
 				$res[] = $data;
 	
+				
 	
 			  }
 			}
@@ -99,8 +103,24 @@ class MyMail {
 	
 	
 	
-	
-	
+	public function removeOne($num) {
+
+		$inbox = imap_open($this->hostname, $this->username, $this->password)
+			 or die('Cannot connect to Gmail: ' . imap_last_error());
+		$emails = imap_search($inbox,'ALL');
+		$mbox = $inbox;
+		
+		$check = imap_mailboxmsginfo($mbox);
+		//echo "Nombre de messages avant effacement : " . $check->Nmsgs . "<br />\n";
+		imap_delete($mbox, $num);
+		$check = imap_mailboxmsginfo($mbox);
+		//echo "Nombre de messages après effacement : " . $check->Nmsgs . "<br />\n";
+		imap_expunge($mbox);
+		$check = imap_mailboxmsginfo($mbox);
+		//echo "Nombre de messages après imap_expunge : " . $check->Nmsgs . "<br />\n";
+		
+		imap_close($mbox);
+	}
 
 }
 
