@@ -35,7 +35,23 @@
 			
 			$("#check-trigger").click(function() {
 			
-				//alert("actualisation");
+				var datas = {};
+				 $.ajax({  
+					type: 'POST',        
+					url: "index.php?controller=calendars&action=ajax-check",  
+					data: datas,
+					dataType: 'json',    
+					success: function(resp) {
+						if (resp['msg'] == 'OK') {
+							console.log(resp);
+							$("#check-trigger .badge").html(resp['new']);
+						} else {
+							console.log(resp);
+							
+						}
+					}  
+				  });
+					
 			});
 			
 			
@@ -72,12 +88,12 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" id="check-trigger">Actualiser</a></li>
+            <li><a href="#" id="check-trigger">Actualiser <span class="badge"></span></a></li>
             <li><a href="#">Parametrage</a></li>
             
           </ul>
           
-          <form class="navbar-form navbar-right">
+          <form class="navbar-form navbar-right" id="header-form">
             <input type="hidden" name="controller" value="calendars" />
            <input type="hidden" name="action" value="view" />
             <select class="form-control" name="id" id="team-selector">
