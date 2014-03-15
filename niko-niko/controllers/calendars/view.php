@@ -2,9 +2,13 @@
 
 	$calendar = new donatj\SimpleCalendar();
 	
-	$team = 2;
+	$team = request::get('id');
 	$datefrom = "";
 	$dateto = "";
+	
+	$teams = users::getTeams();
+	
+	$teamName = $teams[$team];
 	
 	$data = OrmSmiley::getAllSmileysFromPeriode($team, $datefrom, $dateto);
 	

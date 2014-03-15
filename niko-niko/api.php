@@ -16,6 +16,7 @@
 	include(PATH_LIBS . "request.class.php");
 	include(PATH_LIBS . "orm.smiley.class.php");
 	include(PATH_LIBS . "smiley.class.php");
+	include(PATH_LIBS . "helper.class.php");
 	
 	include("libs/users.class.php");
 	

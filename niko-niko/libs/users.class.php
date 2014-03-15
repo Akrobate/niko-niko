@@ -74,15 +74,13 @@ class users extends sql {
 	
 	
 	public static function getTeams() {
-		/*
 		$teamconf = self::getConfig();
 		$result = array();
-		print_r($teamconf);
+		//print_r($teamconf);
 		foreach($teamconf as $key => $value) {
 			$result[ $value['teamid'] ] = $value['teamname'];
 		}
 		return $result;
-		*/
 	}
 	
 	
