@@ -40,6 +40,7 @@ class MySmiley {
 			return 10;
 		}
 		
+		return false;
 	
 	}
 

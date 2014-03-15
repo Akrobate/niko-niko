@@ -121,7 +121,14 @@ class MyMail {
 			$data['from'] = trim($data['from'][1]);
 			$res[] = $data;
 			if ($realydelete) {
-				imap_delete($inbox, $email_number);				
+			
+				//count($res) - 1
+			//	$check = imap_mailboxmsginfo($inbox);
+			//	echo "Nombre de messages avant effacement : " . $check->Nmsgs . "<br />\n";
+					imap_delete($inbox, $email_number);				
+			//	$check = imap_mailboxmsginfo($inbox);
+			//	echo "Nombre de messages après effacement : " . $check->Nmsgs . "<br />\n";
+			
 			}
 		  }
 		}

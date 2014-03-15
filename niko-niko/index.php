@@ -22,7 +22,6 @@
 			//$template_content = ob_get_contents();
 			$template_content = ob_get_contents();
 			ob_end_clean();
-			
 			require_once( PATH_TEMPLATES . "layouts/main.php");	
 	} else {
 		echo("ERROR::Template or script missing");
