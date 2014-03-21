@@ -13,17 +13,25 @@
 		//print_r($m);
 		$sujet = $m['subject'];
 		$user = $m['from'];
-		$date = date("Y-m-y", strtotime($m['date']));
-		
+		$date = date("Y-m-d", strtotime($m['date']));
+
+		$response['from'] =  $user;
+		$response['date'] = $date;
+		$response['maildate'] = $m['date'];	
+		$response['subject'] = $sujet;
+		$response['detection']= MySmiley::detect($sujet);
+
 		if (MySmiley::detect($sujet)) {
 			if(users::checkUserCanAdd($user, $date)) {	
 				$item = array();
 				$item['smiles']['smileycode'] = MySmiley::detect($sujet);
 				$item['smiles']['created'] = $date;
 				$item['smiles']['inteams'] = users::getTeamIds($user);
-				
+				$response['item']=$item;
 				OrmSmiley::addSmile($item);
 				users::addVoteDay($user, $date);
+			} else {
+				$response['status'] = "user cant add";
 			}
 		}
 		
