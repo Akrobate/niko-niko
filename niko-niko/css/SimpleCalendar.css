@@ -97,3 +97,7 @@ table.SimpleCalendar tbody td div.event {
 
 table.SimpleCalendar tbody tr td:nth-child(n+6) { background-color: #898989; }  
 
+
+
+.SimpleCalendar { border: 1px solid grey; border-radius: 10px !important;  }
+

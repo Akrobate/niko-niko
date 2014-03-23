@@ -49,20 +49,11 @@
 							$("#check-trigger .badge").html(resp['new']);
 						} else {
 							console.log(resp);
-							
 						}
 					}  
 				  });
-					
 			});
-			
-			
-			
-			
 		});
-	
-	
-	
 	</script>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -92,45 +83,33 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#" id="check-trigger">Actualiser <span class="badge"></span></a></li>
             <li><a href="#">Parametrage</a></li>
-            
           </ul>
-          
           <form class="navbar-form navbar-right" id="header-form">
             <input type="hidden" name="controller" value="calendars" />
            <input type="hidden" name="action" value="view" />
             <select class="form-control" name="id" id="team-selector">
             <? foreach (users::getTeams() as $tid => $tname): ?>
-			
 				<option value="<?=$tid?>" <? if ($tid == request::get('id')): ?>selected="selected" <? endif; ?> />
 					<?=$tname?>
 				</option>
-			
 			<? endforeach; ?>
 			</select>
-			
 			<select class="form-control" name="datamode" id="datamode-selector">
-           
-           
 				<option value="allvotes" <? if ("allvotes" == request::get('datamode')): ?>selected="selected" <? endif; ?> />
 					Tous les votes
 				</option>
-			<option value="average" <? if ("average" == request::get('datamode')): ?>selected="selected" <? endif; ?> />
+				<option value="average" <? if ("average" == request::get('datamode')): ?>selected="selected" <? endif; ?> />
 					Moyenne
 				</option>
-			
 			</select>
 			<select class="form-control" name="action" id="action-selector">
-           
-           
-				<option value="view" <? if ("view" == request::get('action')): ?>selected="selected" <? endif; ?> />
+           		<option value="view" <? if ("view" == request::get('action')): ?>selected="selected" <? endif; ?> />
 					Calendrier
 				</option>
-			<option value="viewgraphic" <? if ("viewgraphic" == request::get('action')): ?>selected="selected" <? endif; ?> />
+				<option value="viewgraphic" <? if ("viewgraphic" == request::get('action')): ?>selected="selected" <? endif; ?> />
 					Graphique
 				</option>
-			
 			</select>
-			
           </form>
         </div>
       </div>
