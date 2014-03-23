@@ -73,6 +73,25 @@ class MySmiley {
 	}
 
 
+	public static function getRoundedScore($score, $values = array(0, 10, 20, 30)) {
+	
+		$lessDelta = 100;
+		$pointer = 0;
+		
+		foreach($values as $key=>$val) {
+			if ((($score - $val) * ($score - $val)) < $lessDelta) {
+				$lessDelta = (($score - $val) * ($score - $val));
+				$pointer = $key;
+			
+			}
+		}
+	
+		return $values[$pointer];
+	
+	
+	}
+
+
 
 
 	private static function htmlImgWrapp($filename) {

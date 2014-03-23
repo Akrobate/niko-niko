@@ -22,16 +22,18 @@
     <script src="public/bootstrap3/js/docs.min.js"></script>
 
 	<script>
-	
-	
 		$(document).ready(function() { 
 			$("#team-selector").change(function() {
-				
 				$(this).parent("form").submit();
-				
 			});
 			
+			$("#action-selector").change(function() {
+				$(this).parent("form").submit();
+			});
 			
+			$("#datamode-selector").change(function() {
+				$(this).parent("form").submit();
+			});
 			
 			$("#check-trigger").click(function() {
 			
@@ -105,6 +107,30 @@
 			
 			<? endforeach; ?>
 			</select>
+			
+			<select class="form-control" name="datamode" id="datamode-selector">
+           
+           
+				<option value="allvotes" <? if ("allvotes" == request::get('datamode')): ?>selected="selected" <? endif; ?> />
+					Tous les votes
+				</option>
+			<option value="average" <? if ("average" == request::get('datamode')): ?>selected="selected" <? endif; ?> />
+					Moyenne
+				</option>
+			
+			</select>
+			<select class="form-control" name="action" id="action-selector">
+           
+           
+				<option value="view" <? if ("view" == request::get('action')): ?>selected="selected" <? endif; ?> />
+					Calendrier
+				</option>
+			<option value="viewgraphic" <? if ("viewgraphic" == request::get('action')): ?>selected="selected" <? endif; ?> />
+					Graphique
+				</option>
+			
+			</select>
+			
           </form>
         </div>
       </div>

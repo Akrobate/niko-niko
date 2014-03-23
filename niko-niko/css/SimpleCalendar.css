@@ -82,3 +82,18 @@ table.SimpleCalendar tbody td div.event:hover .eventdetails {
 table.SimpleCalendar tbody td.today {
 	background: #D1D1D1;
 }
+
+table.SimpleCalendar tbody td div.event {
+	color: #355;
+	font-size: .9em;
+	margin: 2px;
+	padding: 3px;
+	line-height: 1.2em;
+	border-bottom: 1px solid #bbb;
+	background: none;
+	color: white;
+	border-radius: 3px;
+}
+
+table.SimpleCalendar tbody tr td:nth-child(n+6) { background-color: #898989; }  
+

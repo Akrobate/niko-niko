@@ -21,7 +21,8 @@ class SimpleCalendar {
 	 *
 	 * @var array
 	 */
-	public $wday_names = false;
+	//public $wday_names = false;
+	public $wday_names = array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
 
 	/**
 	 * Constructor - Calls the setDate function
