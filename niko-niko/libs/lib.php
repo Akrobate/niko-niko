@@ -164,6 +164,22 @@ class MyMail {
 		
 		imap_close($mbox);
 	}
+	
+	
+	
+	public function sendMail($to, $subject, $message) {
+	
+		$inbox = imap_open($this->hostname, $this->username, $this->password)
+			 or die('Cannot connect to Gmail: ' . imap_last_error());
+	
+		$status = imap_mail ($to , $subject , $message);
+	
+	}
+	
+	
+	
+	
+	
 
 }
 
