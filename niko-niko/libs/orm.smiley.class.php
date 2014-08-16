@@ -5,22 +5,26 @@ require_once(LIBS_PATH."sql.class.php");
 class OrmSmiley extends sql {
 
 
-	public static function getAllSmileysFromPeriode($teamid, $datefrom, $dateto) {
+	public static function getAllSmileysFromPeriode($teamid, $datefrom="", $dateto="") {
 
 		$query = "SELECT * FROM smiles WHERE inteams LIKE '%".$teamid."%' ";
 		
-		//echo($query);
+		if ($datefrom != "") {
+			$query .= " AND created > \"$datefrom\" ";
+		}
+		
+		if ($dateto != "") {
+			$query .= " AND created < \"$dateto\" ";
+		}
 		
 		$result = parent::query($query);
 		$nbr = parent::nbrRows();
-		
 		while ($r = parent::FetchArray()) {
 			$data[ $r['created'] ][] = $r;
 		
 		}
 		
 		return $data;
-	
 	}
 
 

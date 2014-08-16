@@ -11,8 +11,6 @@ class users extends sql {
 		$usercode = self::encodeUserName($user);
 		$query = "SELECT * FROM days WHERE created='".$date."' AND votedlist LIKE '%".$usercode."%' ";
 		
-		//echo($query);
-		
 		$result = parent::query($query);
 		$nbr = parent::nbrRows();
 		$data = parent::allFetchArray();

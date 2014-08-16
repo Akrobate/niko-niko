@@ -1,18 +1,16 @@
 <?php
-
 	
 	$team = request::get('id');
 	$datamode = request::get('datamode');
 	
-	$datefrom = "";
+	$monthago = date("Y-m-d", time() - (30 * 24 * 60 * 60));
+
+	$datefrom = $monthago;
 	$dateto = "";
 	
-	$teams = users::getTeams();
-	
+	$teams = users::getTeams();	
 	$teamName = $teams[$team];
-	
 	$data = OrmSmiley::getAllSmileysFromPeriode($team, $datefrom, $dateto);
-
 
 	$result = array();
 	
@@ -22,14 +20,9 @@
 		foreach($smiles as $smile) {
 			$smilescore += $smile['smileycode'];
 		}
-	
-		$smileaverage = $smilescore / count($smiles);
-	
+		$smileaverage = $smilescore / count($smiles);	
 		$date = date("j-M-y", strtotime($date));
-	
-	
 		$result[$date] = $smileaverage;
-		
 	}
 	
 	// a reprendre, pas clean
