@@ -21,18 +21,62 @@
 		$response['subject'] = $sujet;
 		$response['detection']= MySmiley::detect($sujet);
 
-		if (MySmiley::detect($sujet)) {
-			if(users::checkUserCanAdd($user, $date)) {	
-				$item = array();
-				$item['smiles']['smileycode'] = MySmiley::detect($sujet);
-				$item['smiles']['created'] = $date;
-				$item['smiles']['inteams'] = users::getTeamIds($user);
-				$response['item']=$item;
-				OrmSmiley::addSmile($item);
-				users::addVoteDay($user, $date);
-			} else {
-				$response['status'] = "user cant add";
+
+		if (users::userIsInConf($user)) {
+
+
+			if (MySmiley::detect($sujet)) {
+				if(users::checkUserCanAdd($user, $date)) {	
+					$item = array();
+					$item['smiles']['smileycode'] = MySmiley::detect($sujet);
+					$item['smiles']['created'] = $date;
+					$item['smiles']['inteams'] = users::getTeamIds($user);
+					$response['item']=$item;
+					OrmSmiley::addSmile($item);
+					users::addVoteDay($user, $date);
+				
+					// On previent l'utilisateur	
+					$d['to'] = $user;
+					$d['smiley'] = ":-)";
+					$d['subject'] = "Merci pour la participation! Niko-Niko";
+					$tplname = "voteprisencompte";
+					$mailbox = new MyMail();
+					$msgs = $mailbox->SendTemplatedMail($tplname, $d);
+				
+				} else {
+					$response['status'] = "user cant add";
+				
+					$d['to'] = $user;
+					$d['subject'] = "Niko-Niko";
+					$tplname = "nomorevote";
+					$mailbox = new MyMail();
+					$msgs = $mailbox->SendTemplatedMail($tplname, $d);
+				
+				
+				}
+			} else { // SI smiley non detecté
+		
+			// On previent l'utilisateur
+					$response['status'] = "No Smiley in mail";
+				
+					$d['to'] = $user;
+					$d['subject'] = "Pas de smiley reconnu - Niko-Niko";
+					$tplname = "nosmiley";
+					$mailbox = new MyMail();
+					$msgs = $mailbox->SendTemplatedMail($tplname, $d);
+		
 			}
+			
+		} else { // Si l'utilisateur ne peut participer au NikoNiko
+				
+					$response['status'] = "User Not in Niko niko";
+					$d['to'] = $user;
+					$d['subject'] = "Vous ne faites partie d'aucune equipe - Niko-Niko";
+					$tplname = "noniko";
+					$mailbox = new MyMail();
+					$msgs = $mailbox->SendTemplatedMail($tplname, $d);
+		
+		
 		}
 		
 	}

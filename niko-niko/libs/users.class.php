@@ -89,7 +89,27 @@ class users extends sql {
 		return $md5;
 	}
 	
+	public static function allUsers() {
+		$teamconf = self::getConfig();
+		$outuser = array();
+		foreach($teamconf as $teams) {
+		
+			foreach($teams['member'] as $user) {
+				$outuser[] = $user;
+			}
+		}
+		
+		$outuser = array_flip($outuser);
+		$outuser = array_flip($outuser);
+		
+		return $outuser;
+	}
 	
+	
+	public static function userIsInConf($user) {
+		$outuser = self::allUsers();
+		return in_array($user, $outuser);
+	}
 	
 	
 }

@@ -1,8 +1,23 @@
 <?php
 
+	$u = "adel.lynda@gmail.com";
+	var_dump(users::userIsInConf($u));
 
 
 	/*
+	$d['to'] = "fedorov.artiom@gmail.com";
+	$d['subject'] = "message de test";
+	$d['smiley'] = ":-)";
+	$tplname = "voteprisencompte";
+	
+	$mailbox = new MyMail();
+	$msgs = $mailbox->SendTemplatedMail($tplname, $d);
+	
+	print_r($msgs);
+	
+	
+	
+	
 	$calendar = new donatj\SimpleCalendar();
 	$calendar->setStartOfWeek('Sunday');
 	
