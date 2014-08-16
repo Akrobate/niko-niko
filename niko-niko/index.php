@@ -11,7 +11,7 @@
 	}
 	
 	if($action == "") {
-		$action = "index";
+		$action = "view";
 	}
 	
 	

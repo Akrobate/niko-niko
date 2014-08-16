@@ -41,7 +41,7 @@
 		
 			$ht = MySmiley::getHtmlSmile(MySmiley::getRoundedScore($smileaverage), false);
 		
-			$calendar->addDailyHtml($ht . $smileaverage,  $date, $date  );
+			$calendar->addDailyHtml($ht ." <span style=\"color: black\"> ". (int)$smileaverage ." </span> ",  $date, $date  );
 		}
 	}
 	

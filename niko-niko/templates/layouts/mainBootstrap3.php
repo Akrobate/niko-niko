@@ -82,7 +82,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#" id="check-trigger">Actualiser <span class="badge"></span></a></li>
-            <li><a href="#">Parametrage</a></li>
+            <!-- <li><a href="#">Parametrage</a></li> -->
           </ul>
           <form class="navbar-form navbar-right" id="header-form">
             <input type="hidden" name="controller" value="calendars" />

@@ -10,7 +10,7 @@
 	include(PATH_CONFIGS . "db.php");
 	include(PATH_CONFIGS . "mail.php");
 	
-	include(PATH_LIBS . "lib.php");
+	include(PATH_LIBS . "mymail.class.php");
 	include(PATH_LIBS . "sql.class.php");
 	include(PATH_LIBS . "calendar.class.php");
 	include(PATH_LIBS . "request.class.php");
@@ -18,7 +18,6 @@
 	include(PATH_LIBS . "smiley.class.php");
 	include(PATH_LIBS . "helper.class.php");
 	include(PATH_LIBS . "phpmailer/class.phpmailer.php");
-	
-	include("libs/users.class.php");
+	include(PATH_LIBS . "users.class.php");
 	
 	

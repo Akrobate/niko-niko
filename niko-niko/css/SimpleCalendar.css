@@ -95,9 +95,9 @@ table.SimpleCalendar tbody td div.event {
 	border-radius: 3px;
 }
 
-table.SimpleCalendar tbody tr td:nth-child(n+6) { background-color: #898989; }  
+table.SimpleCalendar tbody tr td:nth-child(n+6) { background-color: #dedede; }  
 
-
+time { background-color: #f0fefe !important; }
 
 .SimpleCalendar { border: 1px solid grey; border-radius: 10px !important;  }
 

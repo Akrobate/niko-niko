@@ -1,48 +1,23 @@
 <?php
 
+	// Run feeding
+	//feedExemples(6, "2014-08-01", "2014-08-23");
+	
 
-	var_dump(users::userCanAccess());
+	function feedExemples($nbr_users = 6, $dateFrom, $dateTo) {
+//	 	users::getTeams()		
+		while (strtotime($dateFrom) < strtotime($dateTo)) {
+			for($i = 0; $i < $nbr_users; $i++) {
+				$item = array();
+				$item['smiles']['smileycode'] = rand(1,3) * 10;
+				$item['smiles']['created'] = $dateFrom;
+				$item['smiles']['inteams'] = array(rand(1,2));
+				OrmSmiley::addSmile($item);		
+			}
+			$dateFrom = date("Y-m-d", strtotime($dateFrom) + (24*3600));
+		}
+	}
 
-
-	/*
-	$d['to'] = "fedorov.artiom@gmail.com";
-	$d['subject'] = "message de test";
-	$d['smiley'] = ":-)";
-	$tplname = "voteprisencompte";
-	
-	$mailbox = new MyMail();
-	$msgs = $mailbox->SendTemplatedMail($tplname, $d);
-	
-	print_r($msgs);
-	
-	
-	
-	
-	$calendar = new donatj\SimpleCalendar();
-	$calendar->setStartOfWeek('Sunday');
-	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-)", false), 'yesterday', 'yesterday' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-|", false), 'yesterday', 'yesterday' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false), 'yesterday', 'yesterday' );
-	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-)", false), 'today', 'today' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-|", false), 'today', 'today' );
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false), 'today', 'today' );
-	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false) 
-							. MySmiley::str2smiley(":-|", false)
-							. MySmiley::str2smiley(":-)", false)
-							. MySmiley::str2smiley(":-(", false), 'today', 'today' );
-	
-	$calendar->addDailyHtml(MySmiley::str2smiley(":-(", false) 
-						. MySmiley::str2smiley(":-|", false)
-						. MySmiley::str2smiley(":-)", false)
-						. MySmiley::str2smiley(":-(", false), '2014-02-19', '2014-02-19' );
-
-	
-	$calendarHTML = $calendar->show(false);
-	*/
-	
 	
 	
 ?>
