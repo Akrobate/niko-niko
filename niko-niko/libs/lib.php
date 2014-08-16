@@ -177,7 +177,17 @@ class MyMail {
 	}
 	
 	
+	public function MailTemplate($tplname, $data) {
 	
+		// Variable md comme maildata
+		$md = $data;
+		ob_start();
+			include(PATH_TEMPLATES . "mails/". $tplname .".php");
+		$template_content = ob_get_contents();
+		ob_end_clean();
+		return $template_content;
+	
+	}
 	
 	
 
