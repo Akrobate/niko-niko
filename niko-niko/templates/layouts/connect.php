@@ -4,6 +4,6 @@
 		<script src="public/js/jquery.js"></script>		
 	</head>
 	<body>
-		<?=$template_content?>
+		Niko-Niko : Access refusé
 	</body>
 </html>

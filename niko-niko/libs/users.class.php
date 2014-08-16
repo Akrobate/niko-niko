@@ -3,6 +3,7 @@
 class users extends sql {
 
 	private static $config = null;
+	private static $configAccess = null;
 	
 	public static function checkUserCanAdd($user, $date) {
 	
@@ -111,6 +112,28 @@ class users extends sql {
 		return in_array($user, $outuser);
 	}
 	
+	
+	public static function getConfigAccess() {
+		if (self::$configAccess === null) {
+			self::$configAccess = parse_ini_file ("config/access.config.ini",TRUE);
+		} 
+		return self::$configAccess;
+	}
+	
+	
+	public static function userCanAccess() {
+	
+		$usr = $_SERVER['REMOTE_ADDR'];
+	    $tmp =  self::getConfigAccess();
+	    $accesslist = $tmp['access']['allowAdr'];
+	    
+	    if (in_array('all', $accesslist)) {
+		    return true;
+	    } elseif (in_array($usr,$accesslist)) {
+		    return true;
+		}
+		return false;
+	}
 	
 }
 

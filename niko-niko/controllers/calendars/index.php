@@ -1,7 +1,7 @@
 <?php
 
-	$u = "adel.lynda@gmail.com";
-	var_dump(users::userIsInConf($u));
+
+	var_dump(users::userCanAccess());
 
 
 	/*
