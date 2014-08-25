@@ -43,6 +43,38 @@ class users extends sql {
 		
 	}
 	
+	/**
+	 * Methode assurant l'anonymat en melangeant a chaque ajout la votelist
+	 *
+	 */ 
+	
+	public static function addVoteDayAndShuffle($user, $date) {
+	
+		$user = sql::escapeString($user);
+		$usercode = self::encodeUserName($user);
+		$query = "SELECT * FROM days WHERE created='".$date."'";
+		$result = parent::query($query);
+		$nbr = parent::nbrRows();
+		$data = parent::allFetchArray();
+		
+		if ($nbr > 0) {
+			// Mélange		
+			$allcodes = $data[0]['votedlist'];
+			$allcodesArr = explode(",",$allcodes);
+			$allcodesArr[] = $usercode;
+			shuffle($allcodesArr);
+			$allcodes = implode("," , $allcodesArr);
+			$query = "UPDATE days SET votedlist = '".$allcodes."' WHERE created = '".$date."'";
+			$result = parent::query($query);
+		
+		} else {
+
+			$query = "INSERT INTO days (created, votedlist) VALUES ('".$date."','".$usercode."')";
+			$result = parent::query($query);
+		}
+		
+	}
+	
 	
 	
 	public static function getTeamIds($user) {
