@@ -5,5 +5,5 @@
 	define('DB_PASSWORD', "..."); // replace ... by your user
 	define('DB_NAME', "...");
 	
-	
+	  define('FRONT_URL', "http://urldevotreinstance");	
 
