@@ -4,7 +4,5 @@ utilisez les occurences suivantes:<br>
 <br>
 :-) ou :-| ou :-(<br>
 <br>
-<b>Niko-Niko</b>
-
-
 </p>
+<p><b><a href="<?=FRONT_URL?>">Niko-Niko</a></b></p>

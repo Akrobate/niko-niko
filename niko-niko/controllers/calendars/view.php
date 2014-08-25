@@ -5,7 +5,11 @@
 	$calendar->setStartOfWeek('Monday');
 	
 	$team = request::get('id');
-	$datamode = request::get('datamode');
+	if ($team == "") {
+    $team = 1; // si pas de param alors equipe id=1 par defaut
+  }
+  
+  $datamode = request::get('datamode');
 	
 	$datefrom = "";
 	$dateto = "";
