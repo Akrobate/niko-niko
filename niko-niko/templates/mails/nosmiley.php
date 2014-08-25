@@ -1,4 +1,4 @@
-<p>Désolé votre smiley n'est pas reconnaissable,<br>
+<p>D&eacute;sol&eacute;, votre smiley n'est pas reconnaissable,<br>
 <br>
 utilisez les occurences suivantes:<br>
 <br>

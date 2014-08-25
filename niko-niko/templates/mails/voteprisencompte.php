@@ -1,4 +1,4 @@
-<p>Merci d'avoir envoyé votre smiley,<br />
-ce dernier <?=$md['smiley'];?> à bien été pris en compte<br />
+<p>Merci d'avoir envoy&eacute; votre smiley,<br />
+Ce dernier <?=$md['smiley'];?> &eacute; bien &eacute;t&eacute; pris en compte<br />
 <br />
 <b><a href="<?=FRONT_URL?>">Niko-Niko</a></b></p>
