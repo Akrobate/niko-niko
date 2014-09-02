@@ -2,5 +2,5 @@
 <br>
 Rapprochez vous de l'administrateur du niko-niko<br>
 <br>
-<b><a href="<?=FRONT_URL?>">Niko-Niko</a></b>
+<b><a href="http://artiom-fedorov.blogspot.fr">A propos du Niko-Niko</a></b>
 </p>
