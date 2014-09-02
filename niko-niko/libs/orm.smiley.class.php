@@ -16,6 +16,7 @@ class OrmSmiley extends sql {
 		if ($dateto != "") {
 			$query .= " AND created < \"$dateto\" ";
 		}
+		$query .= " ORDER BY created ASC ";
 		
 		$result = parent::query($query);
 		$nbr = parent::nbrRows();

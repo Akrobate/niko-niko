@@ -1,5 +1,16 @@
-<link rel="stylesheet" type="text/css" href="public/js/dist/jquery.jqplot.min.css" />
+<? if ($datamode == "allvotes"  ): ?>
+<div style="text-align:center">
+	<img src="<?=url::internal('images','areagraphic',$team, '&periode=now') ?>" />
 
+	<img src="<?=url::internal('images','areagraphic',$team, '&periode=1' ) ?>" />
+
+	<img src="<?=url::internal('images','areagraphic',$team, '&periode=2' ) ?>" />
+
+	<img src="<?=url::internal('images','areagraphic',$team, '&periode=3' ) ?>" />
+</div>
+
+<? else: ?>
+<link rel="stylesheet" type="text/css" href="public/js/dist/jquery.jqplot.min.css" />
 <script language="javascript" type="text/javascript" src="public/js/dist/jquery.jqplot.min.js"></script>
 <script type="text/javascript" src="public/js/dist/plugins/jqplot.highlighter.min.js"></script>
 <script type="text/javascript" src="public/js/dist/plugins/jqplot.cursor.min.js"></script>
@@ -50,3 +61,4 @@ $(document).ready(function(){
 
 
 <div id="chart1"> </div>
+<? endif; ?>
