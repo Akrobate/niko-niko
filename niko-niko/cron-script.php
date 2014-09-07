@@ -2,8 +2,6 @@
 
 	error_reporting(15);
 	require_once("./api.php");
-	
-	//var_dump(users::userCanAccess());
 
 	$users = users::allUsers();
 	$tosend = array();
