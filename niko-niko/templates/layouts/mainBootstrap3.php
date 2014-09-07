@@ -35,26 +35,37 @@
 				$(this).parent("form").submit();
 			});
 			
-		
 			
+			$("#reload-trigger").click(function() {
+				location.reload(true);
+			});
+			
+			loading = false;
 			
 			$("#check-trigger").click(function() {
 			
-				var datas = {};
-				 $.ajax({  
-					type: 'POST',        
-					url: "index.php?controller=calendars&action=ajax-check",  
-					data: datas,
-					dataType: 'json',    
-					success: function(resp) {
-						if (resp['msg'] == 'OK') {
-							console.log(resp);
-							$("#check-trigger .badge").html(resp['new']);
-						} else {
-							console.log(resp);
-						}
-					}  
-				  });
+				if (!loading) {
+				loading = true;
+					$(".loader").show();
+					var datas = {};
+					 $.ajax({  
+						type: 'POST',        
+						url: "index.php?controller=calendars&action=ajax-check",  
+						data: datas,
+						dataType: 'json',    
+						success: function(resp) {
+					
+							$(".loader").hide();
+							loading = false;
+							if (resp['msg'] == 'OK') {
+								console.log(resp);
+								$("#check-trigger .badge").html(resp['new']);
+							} else {
+								console.log(resp);
+							}
+						}  
+					  });
+				} 
 			});
 		});
 	</script>
@@ -81,19 +92,27 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">Niko-Niko Team Tool</a>
+          
+           <div class="navbar-brand loader" style="display:none;">
+        	 <img src="images/ajax-loader.gif" />
+        	 </div>
+          
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" id="check-trigger">Actualiser <span class="badge"></span></a></li>
+            <!--li><a href="#" id="check-trigger-">Actualiser <span class="badge"></span></a></li-->
             <!-- <li><a href="#">Parametrage</a></li> -->
-          
+         
           </ul>
           
+         
+        
           
           <form class="navbar-form navbar-right" id="header-form">
             <input type="hidden" name="controller" value="calendars" />
            <input type="hidden" name="action" value="view" />
           	<input type="hidden" name="periode" value="<?=@$periode?>">
+          
           
           <? // Affichage uniquement dans le cas calendrier - pas graphique 
 		  if ($action=="view") : ?>
@@ -133,6 +152,15 @@
 					Graphique
 				</option>
 			</select>
+			
+			<button type="button" class="btn btn-default" id="reload-trigger" >
+				<span class="glyphicon glyphicon-refresh"></span>
+			</button>
+			
+			<button type="button" class="btn btn-default" id="check-trigger" >
+				<span class="glyphicon glyphicon-envelope"></span>  <span class="badge"></span>
+			</button>
+			
           </form>
         </div>
       </div>
@@ -143,8 +171,6 @@
         
         <div class="col-sm-12  main">
 
-			
-			
 			<?=$template_content?>
 	
         </div>
