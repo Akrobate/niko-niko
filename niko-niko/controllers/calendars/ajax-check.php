@@ -33,8 +33,8 @@
 					$item['smiles']['inteams'] = users::getTeamIds($user);
 					$response['item']=$item;
 					OrmSmiley::addSmile($item);
-					users::addVoteDay($user, $date);
-				
+					//users::addVoteDay($user, $date);
+					users::addVoteDayAndShuffle($user, $date);
 					// On previent l'utilisateur	
 					$d['to'] = $user;
 					$d['smiley'] = ":-)";
