@@ -35,6 +35,9 @@
 				$(this).parent("form").submit();
 			});
 			
+		
+			
+			
 			$("#check-trigger").click(function() {
 			
 				var datas = {};
@@ -83,10 +86,30 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#" id="check-trigger">Actualiser <span class="badge"></span></a></li>
             <!-- <li><a href="#">Parametrage</a></li> -->
+          
           </ul>
+          
+          
           <form class="navbar-form navbar-right" id="header-form">
             <input type="hidden" name="controller" value="calendars" />
            <input type="hidden" name="action" value="view" />
+          	<input type="hidden" name="periode" value="<?=@$periode?>">
+          
+          <? // Affichage uniquement dans le cas calendrier - pas graphique 
+		  if ($action=="view") : ?>
+		      <div class="btn-group">
+				  <button type="submit" class="btn btn-default" id="previous_period" name="periode" value="<?=@$previousperiode?>">
+		  				<span class="glyphicon glyphicon-chevron-left"></span>
+				  </button>
+				  <button type="button" class="btn btn-default" id="period_indicator">
+				  		<?=@$periode_indicator?>&nbsp;
+				  </button>
+				  <button type="group" class="btn btn-default" id="next_period" name="periode" value="<?=@$nextperiode?>">         
+		  				<span class="glyphicon glyphicon-chevron-right"></span>
+				  </button>
+		      </div>
+          <? endif; ?>
+          
             <select class="form-control" name="id" id="team-selector">
             <? foreach (users::getTeams() as $tid => $tname): ?>
 				<option value="<?=$tid?>" <? if ($tid == request::get('id')): ?>selected="selected" <? endif; ?> />

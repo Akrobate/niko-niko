@@ -20,6 +20,7 @@ class OrmSmiley extends sql {
 		
 		$result = parent::query($query);
 		$nbr = parent::nbrRows();
+		$data = array();
 		while ($r = parent::FetchArray()) {
 			$data[ $r['created'] ][] = $r;
 		

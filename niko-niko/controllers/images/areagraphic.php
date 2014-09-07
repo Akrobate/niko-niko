@@ -8,8 +8,8 @@
 
 	// Semaine courante
 	if ($command == "now") {
-		$lastMonday = date("Y-m-d", strtotime("last Monday") - (24*60*60));
-	
+		$lastMonday = date("Y-m-d", strtotime("last Monday") - (24*60*60) );
+		//echo($lastMonday);
 	} elseif (is_numeric($command)) {
 		$lastMonday = date("Y-m-d", strtotime("last Monday") - ((24*60*60*7) * $command) - (24*60*60));
 	} else {
@@ -22,6 +22,8 @@
 	$teamName = $teams[$team];
 	
 	$dataBrut = @OrmSmiley::getAllSmileysFromPeriode($team, $datefrom, $dateto);
+	
+	//print_r($dataBrut);
 	
 	$data = array();
 	// Todo: Filtrer  par la date end
