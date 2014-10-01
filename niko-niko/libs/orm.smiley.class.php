@@ -10,7 +10,7 @@ class OrmSmiley extends sql {
 		$query = "SELECT * FROM smiles WHERE inteams LIKE '%".$teamid."%' ";
 		
 		if ($datefrom != "") {
-			$query .= " AND created > \"$datefrom\" ";
+			$query .= " AND created >= \"$datefrom\" ";
 		}
 		
 		if ($dateto != "") {
