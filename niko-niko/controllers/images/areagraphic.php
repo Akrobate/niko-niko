@@ -6,6 +6,10 @@
 
 	$preventTPL = 0;
 
+	if ($team == "") {
+    	$team = DEFAULT_TEAM; // si pas de param alors equipe id=1 par defaut
+	}
+
 	// Semaine courante
 	if ($command == "now") {
 		$lastMonday = date("Y-m-d", strtotime("last Monday") - (24*60*60) );

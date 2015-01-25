@@ -8,6 +8,13 @@
 	$datefrom = $monthago;
 	$dateto = "";
 	
+	if ( ($team == "") || (!acl::userCanSee('SELECT_TEAM')) ) {
+    	$team = DEFAULT_TEAM; // si pas de param alors equipe id=1 par defaut
+	}
+	
+	
+	
+	
 	$teams = users::getTeams();	
 	$teamName = $teams[$team];
 	

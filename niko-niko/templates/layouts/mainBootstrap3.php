@@ -91,7 +91,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Niko-Niko Team Tool</a>
+          <a class="navbar-brand" href="<?=url::internal('calendars','view')?>">Niko-Niko Team Tool</a>
           
            <div class="navbar-brand loader" style="display:none;">
         	 <img src="images/ajax-loader.gif" />
@@ -128,16 +128,17 @@
 				  </button>
 		      </div>
           <? endif; ?>
-          
-          
-            <select class="form-control" name="id" id="team-selector">
-            <? foreach (users::getTeams() as $tid => $tname): ?>
-				<option value="<?=$tid?>" <? if ($tid == request::get('id')): ?>selected="selected" <? endif; ?> />
-					<?=$tname?>
-				</option>
-			<? endforeach; ?>
-
-			</select>
+		      
+		     <? if (acl::userCanSee('SELECT_TEAM')): ?>
+		        <select class="form-control" name="id" id="team-selector">
+				    <? foreach (users::getTeams() as $tid => $tname): ?>
+						<option value="<?=$tid?>" <? if ($tid == request::get('id')): ?>selected="selected" <? endif; ?> />
+							<?=$tname?>
+						</option>
+					<? endforeach; ?>
+				</select>
+			<? endif; ?>	
+		
 			<select class="form-control" name="datamode" id="datamode-selector">
 				<option value="allvotes" <? if ("allvotes" == request::get('datamode')): ?>selected="selected" <? endif; ?> />
 					Tous les votes
@@ -163,6 +164,11 @@
 				<span class="glyphicon glyphicon-envelope"></span>  <span class="badge"></span>
 			</button>
 			
+			<? if(auth::getUser() != 'anonyme' && auth::getUser() != ''): ?>
+				<a href="<?=url::internal('users','logout')?>" type="button" class="btn btn-default" >
+					<span class="glyphicon glyphicon-remove"></span>  <span class="badge"></span>
+				</a>
+			<? endif; ?>
           </form>
         </div>
       </div>
@@ -170,11 +176,8 @@
 
     <div class="container-fluid">
       <div class="row">
-        
         <div class="col-sm-12  main">
-
 			<?=$template_content?>
-	
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@
 	session_start();
 	error_reporting(15);
 	require_once("./api.php");
+
 	
 	// Recuperation des parametres principaux de routage
 	$controller = request::get("controller");
@@ -21,18 +22,18 @@
 	
 	// Controller par defaut (a migrer dans un fichier de conf)
 	if ($controller == "") {
-		$controller = "calendars";
+		$controller = DEFAULT_CONTROLLER;
 	}
 	
 	// Action par defaut (a migrer dans un fichier de conf)
 	if($action == "") {
-		$action = "view";
+		$action = DEFAULT_ACTION;
 	}
 	
-	
-	$me = Auth::tryToAuth($user, $akey);
-	$permissions = acl::loadToSessionUsersACL($me);
-	
+	Auth::tryToAuth($user, $akey);
+	$permissions = acl::loadToSessionUsersACL(Auth::getUser());
+
+
 	// Verification des droits utilisateurs courant
 	if (users::userCanAccess()) {
 

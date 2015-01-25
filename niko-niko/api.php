@@ -10,6 +10,7 @@
 	
 	include(PATH_CONFIGS . "db.php");
 	include(PATH_CONFIGS . "mail.php");
+	include(PATH_CONFIGS . "app.defines.php");
 	
 	include(PATH_LIBS . "mymail.class.php");
 	include(PATH_LIBS . "sql.class.php");

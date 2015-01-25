@@ -3,7 +3,6 @@
 	
 	$team = request::get('id');
 	$periode = request::get('periode');
-
 	
 	$datefrom = "";
 	$dateto = "";
@@ -41,7 +40,7 @@
 	
 	
 	if ($team == "") {
-    	$team = 1; // si pas de param alors equipe id=1 par defaut
+    	$team = DEFAULT_TEAM; // si pas de param alors equipe id=1 par defaut
 	}
   
   $datamode = request::get('datamode');

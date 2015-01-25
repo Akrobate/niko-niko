@@ -1,5 +1,13 @@
 <?php
 
+/**
+ *	Classe s'occupant de restreindre les niveau d'acces en fonction des utilisateurs
+ *
+ *
+ *
+ */
+
+
 
 class acl {
 
@@ -15,10 +23,7 @@ class acl {
 
 
 	
-	public static function userCanSee($whattosee, $who = 'anonyme') {
-		$config = self::getConfigAccess();
-		$role =  self::getUserRole($who);
-	}
+	
 	
 	
 	public static function getRolePermissions($role) {
@@ -30,7 +35,6 @@ class acl {
 			foreach($roles as $r) {
 				$res[] = trim($r);
 			}
-			
 		} 	
 		return $res;
 	}
@@ -38,15 +42,40 @@ class acl {
 	
 	
 	public static function getUserRole($user) {
-	
 		$config = self::getConfigAccess();
 		if ( isset ( $config['usersroles'][$user] ) ) {
 			return $config['usersroles'][$user];
 		} else {
 			return $config['usersroles']['anonyme'];
 		}
-		
 	}
+
+	
+	/**
+	 *	Methode permettant de récuperer tous les utilisateurs
+	 *	d'un role
+	 *
+	 */
+	
+	
+	public static function getUsersFromRole($role) {
+	
+		$res = array();
+		$config = self::getConfigAccess();
+		foreach($config['usersroles'] as $u => $r) {
+			if ($r == $role) {
+				$res[] = $u;
+			}
+		}
+		return $res;
+	}
+
+
+	/**
+	 *	Methodes travaillant avec les sessions
+	 *
+	 *
+	 */
 
 
 	public static function loadToSessionUsersACL($user) {
@@ -65,7 +94,19 @@ class acl {
 	public static function getSessionPermissions() {
 		return $_SESSION['ACL']['permission'];
 	}
+	
+	public static function sessionClose() {
+		$_SESSION['ACL'] = null;
+	}
 
 
+
+	public static function userCanSee($what) {
+		$permissionList = self::getSessionPermissions();
+		if (in_array($what, $permissionList)) {
+			return true;
+		}
+		return false;
+	}	
 	
 }

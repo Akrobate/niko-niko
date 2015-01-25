@@ -7,7 +7,7 @@
  *
  */
  
-	define('KEY',"MaClefPourEncoder");
+
 
 
 class Auth {
@@ -37,12 +37,27 @@ class Auth {
 
 	public static function tryToAuth($user, $akey) {
 
-		if (!self::userSessionIsSet()) {
-			if (!self::checkAuthUser($user, $akey)) {
+		if ($user != "") {
+			if (!self::userSessionIsSet()) {
+				if (!self::checkAuthUser($user, $akey)) {
+					$user = 'anonyme';
+				}
+				self::sessionOpen($user);
+			} else {
+		
+				if (self::getUser() == 'anonyme' && $user != "") {
+					if (!self::checkAuthUser($user, $akey)) {
+						$user = 'anonyme';
+					}
+				}
+				self::sessionOpen($user);
+			}
+		} else {
+			if (!self::userSessionIsSet()) {
 				$user = 'anonyme';
+				self::sessionOpen($user);
 			}
 		}
-		self::sessionOpen($user);
 	}
 
 

@@ -10,4 +10,10 @@ R&eacute;pondez simplement &agrave; ce mail en utilisant une des occurences suiv
 <br>
 <b><a href="<?=FRONT_URL?>">Niko-Niko</a></b>
 <br>
+
+<? if (isset($md['manager']) && ($md['manager'] == true)) : ?>
+	<br />
+	<b><a href="<?=FRONT_URL . $md['connection_url'] ?>">Niko-Niko Manager</a></b>
+	<br />
+<? endif; ?>
 </p>
