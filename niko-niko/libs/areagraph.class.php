@@ -1,5 +1,14 @@
 <?php
 
+/**
+ *	CLasse permettant de generer des graphiques en surface
+ * 
+ *	@brief		Graphiques avec des zones de surface
+ *
+ * @author		Artiom FEDOROV
+ *
+ */
+ 
 class AreaGraph {
 
 	public $width;
@@ -53,10 +62,14 @@ class AreaGraph {
 	
 	}
 
+
+	/**
+	 *	Methode d'initilisation
+	 *	
+	 */
+
 	public function init() {
-	
-		$this->drawGrid();
-		
+		$this->drawGrid();		
 		if ($this->showGraduation) {
 			$this->drawGridGraudation();
 		}

@@ -166,7 +166,7 @@ class MyMail {
 	 *
 	 */
 	 
-	public function sendMail($to, $subject, $message) {s
+	public function sendMail($to, $subject, $message) {
 		$status = imap_mail ($to , $subject , $message);
 		return $status;
 	}

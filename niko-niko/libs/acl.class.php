@@ -2,17 +2,24 @@
 
 /**
  *	Classe s'occupant de restreindre les niveau d'acces en fonction des utilisateurs
- *
- *
+ *	@brief c'est ici que se gerent les roles des utilisateurs
+ *	@author Artiom FEDOROV
  *
  */
-
-
 
 class acl {
 
 	private static $config = null;
 	private static $configAccess = null;
+
+
+	/**
+	 *	Methode qui permet de recuperer la config de Access
+	 *	@brief	Récupere la config et la stoque
+	 *	@detail	La config devient accessible en dans le singleton
+	 *			Si la config est déja chargé alors le fichier n'est
+	 *			pas ouvert une autre fois
+	 */
 
 	public static function getConfigAccess() {
 		if (self::$configAccess === null) {
@@ -22,10 +29,7 @@ class acl {
 	}
 
 
-	
-	
-	
-	
+
 	public static function getRolePermissions($role) {
 		$config = self::getConfigAccess();
 		$res = array();		
