@@ -210,36 +210,36 @@ class MyMail {
 	 	
 	public function sendMailGmail($to, $title, $message) {
 		
-			$mail = new PHPMailer();
-			$mail->IsSMTP();
-			$mail->Host = "ssl://smtp.gmail.com"; 
-			$mail->SMTPDebug = 1;                     
-                       // 2 = messages only
-			$mail->SMTPAuth = true;
-			$mail->SMTPSecure = "ssl";
-			$mail->Host = "smtp.gmail.com";
-			$mail->Port = 465;
+		$mail = new PHPMailer();
+		$mail->IsSMTP();
+		$mail->Host = "ssl://smtp.gmail.com"; 
+		$mail->SMTPDebug = 1;                     
+        // 2 = messages only
+		$mail->SMTPAuth = true;
+		$mail->SMTPSecure = "ssl";
+		$mail->Host = "smtp.gmail.com";
+		$mail->Port = 465;
 
-			$mail->Username   = $this->username; 
-			$mail->Password   = $this->password;
+		$mail->Username   = $this->username; 
+		$mail->Password   = $this->password;
+	
+		$fromMail =  $this->username;	
+		$toMail = $to;
 		
-			$fromMail =  $this->username;	
-			$toMail = $to;
-			
-			$mail->SetFrom($fromMail, "Niko-Niko");		
-			$mail->Subject = $title;
-			//$mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
-			$mail->MsgHTML($message);
-			$mail->AddAddress($toMail, $toMail);
+		$mail->SetFrom($fromMail, "Niko-Niko");		
+		$mail->Subject = $title;
+		//$mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
+		$mail->MsgHTML($message);
+		$mail->AddAddress($toMail, $toMail);
 
-			//$mail->AddAttachment("images/phpmailer.gif");      // attachment
-			//$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
+		//$mail->AddAttachment("images/phpmailer.gif");      // attachment
+		//$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
 
-			if(!$mail->Send()) {
-			  $result = $mail->ErrorInfo;
-			} else {
-			  $result = true;
-			}   
-			return $result;
-		}
+		if(!$mail->Send()) {
+		  $result = $mail->ErrorInfo;
+		} else {
+		  $result = true;
+		}   
+		return $result;
+	}
 }

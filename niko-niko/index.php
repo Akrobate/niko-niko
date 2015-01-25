@@ -37,33 +37,47 @@
 	// Verification des droits utilisateurs courant
 	if (users::userCanAccess()) {
 
+		/**
+		 *	Brique principale de routage
+		 *	On verifie si les fichiers existent
+		 *	On bypass la veri pour ajax-*
+		 *
+		 *	Lyaout mode conteneur
+		 */
+
 		// Si le l'action du contreuleur inclut le mot clef "ajax" alors le template n'est pas requis
 		$action_tab = explode('-', $action);
+		
+		// Si nous sommes en mode AJAX
 		if ($action_tab[0] == 'ajax') {
-			if(file_exists(PATH_SCRIPTS . $controller . "/" . $action . ".php")) {
-				require_once (PATH_SCRIPTS . $controller . "/" . $action . ".php");
+			if(file_exists(PATH_SCRIPTS . $controller . PATH_SEP . $action . ".php")) {
+				require_once (PATH_SCRIPTS . $controller . PATH_SEP . $action . ".php");
 			}
 			
-			
-		} elseif ((file_exists(PATH_SCRIPTS . $controller . "/" . $action . ".php") && ($controller == "images")
-				&& ((PATH_TEMPLATES . $controller . "/" . $action . ".php")))) {
-					require_once (PATH_SCRIPTS . $controller . "/" . $action . ".php");
-					require_once (PATH_TEMPLATES . $controller . "/" . $action . ".php");
-		} elseif ((file_exists(PATH_SCRIPTS . $controller . "/" . $action . ".php")) 
-			&& ((PATH_TEMPLATES . $controller . "/" . $action . ".php"))) {
-				require_once (PATH_SCRIPTS . $controller . "/" . $action . ".php");
+		// Si Controlleur est images	
+		} elseif ((file_exists(PATH_SCRIPTS . $controller . PATH_SEP . $action . ".php") && ($controller == "images")
+				&& ((PATH_TEMPLATES . $controller . PATH_SEP . $action . ".php")))) {
+					require_once (PATH_SCRIPTS . $controller . PATH_SEP . $action . ".php");
+					require_once (PATH_TEMPLATES . $controller . PATH_SEP . $action . ".php");
+					
+		// Cas Generique pour tous
+		} elseif ((file_exists(PATH_SCRIPTS . $controller . PATH_SEP . $action . ".php")) 
+			&& ((PATH_TEMPLATES . $controller . PATH_SEP . $action . ".php"))) {
+				require_once (PATH_SCRIPTS . $controller . PATH_SEP . $action . ".php");
 				ob_start();
-					require_once (PATH_TEMPLATES . $controller . "/" . $action . ".php");
+					require_once (PATH_TEMPLATES . $controller . PATH_SEP . $action . ".php");
 					$template_content = ob_get_contents();
 				ob_end_clean();
-				require_once( PATH_TEMPLATES . "layouts/mainBootstrap3.php");	
+				require_once( PATH_TEMPLATES . "layouts" . PATH_SEP . "mainBootstrap3.php");	
+
+		// Si Template ou script manquant
 		} else {
 			echo("ERROR::Template or script missing");
 		}
-		
+
 	// Si pas authorisé	
 	} else {
-		require_once( PATH_TEMPLATES . "layouts/connect.php");	
+		require_once( PATH_TEMPLATES . "layouts" . PATH_SEP . "connect.php");	
 	}
 	
 

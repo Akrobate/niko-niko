@@ -26,7 +26,7 @@
 	if ($command == "now") {
 		$lastMonday = date("Y-m-d", strtotime("last Monday") - (24*60*60) );
 
-	} elseif (is_numeric($command)) {s
+	} elseif (is_numeric($command)) {
 		$lastMonday = date("Y-m-d", strtotime("last Monday") - ((24*60*60*7) * $command) - (24*60*60));
 	} else {
 		die();	
