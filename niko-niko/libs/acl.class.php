@@ -23,12 +23,20 @@ class acl {
 
 	public static function getConfigAccess() {
 		if (self::$configAccess === null) {
-			self::$configAccess = parse_ini_file ("config/access.config.ini",TRUE);
+			self::$configAccess = parse_ini_file (PATH_CONFIGS . PATH_SEP . "access.config.ini", true);
 		} 
 		return self::$configAccess;
 	}
 
 
+	/**
+	 *	Methode renvoi l'ensemble des autorisation pour un role
+	 *
+	 *	@brief	Récupere les autorisation pour un role
+	 *	@param role	Prend en parametre le nom du role
+	 *	@return		Array	Liste des autorisations
+	 *
+	 */
 
 	public static function getRolePermissions($role) {
 		$config = self::getConfigAccess();
@@ -44,6 +52,14 @@ class acl {
 	}
 	
 	
+	/**
+	 *	Methode renvoi le role pour un user
+	 *
+	 *	@brief	Récupere le role d'un user
+	 *	@param user	Nom de lutilisateur (mail)
+	 *	@return	role	renvoi le role de l'utilisateur 
+	 *
+	 */
 	
 	public static function getUserRole($user) {
 		$config = self::getConfigAccess();
@@ -58,6 +74,8 @@ class acl {
 	/**
 	 *	Methode permettant de récuperer tous les utilisateurs
 	 *	d'un role
+	 *	@param	role	prend en parametre un role
+	 *	@return renvoi tous les utilisateurs du role
 	 *
 	 */
 	
@@ -78,7 +96,13 @@ class acl {
 	/**
 	 *	Methodes travaillant avec les sessions
 	 *
+	 * ---------------------------------------
+	 *	
+	 *	Methode qui charge les permissions depuis la session pour un user donné
 	 *
+	 *	@param	prend en parametre le nom de lutilisateur (mail)
+	 *	@brief	Charge et renvoi les permissions utilisateur
+	 *  @return	Array permissions 
 	 */
 
 
@@ -90,20 +114,50 @@ class acl {
 	}
 
 
+	/**
+	 *	Methode setteur de permission
+	 *	@brief	Set des permissions en session
+	 *	@param	perm	Array tableau des permissions
+	 *	@return		Void
+	 *
+	 */
+	 
 	public static function setSessionPermissions($perm) {
 		$_SESSION['ACL']['permission'] = $perm;
 	}
 
 
+	/**
+	 *	Methode getteur de permission
+	 *	@brief	Recupere toutes les permissions depuis la session
+	 *	@return		Array	Tableau des permissions
+	 *
+	 */
+	 
 	public static function getSessionPermissions() {
 		return $_SESSION['ACL']['permission'];
 	}
+	
+	
+	/**
+	 *	Methode qui detruit la sessions
+	 *	@brief	Annule les element de session de ce composant
+	 *	@return		void
+	 *
+	 */
 	
 	public static function sessionClose() {
 		$_SESSION['ACL'] = null;
 	}
 
-
+	/**
+	 *	Methode qui verifie si le user est authorisé a voir un element
+	 *	@brief	Verifie si l'utilisateur a le droit de voir un element
+	 *	@param	what	string	Nom de l'element a acceder
+	 *	@detail	Verifie en session
+	 *	@return		Bool	True si peut acceder / False sinon
+	 *
+	 */
 
 	public static function userCanSee($what) {
 		$permissionList = self::getSessionPermissions();
@@ -111,6 +165,27 @@ class acl {
 			return true;
 		}
 		return false;
-	}	
+	}
+	
+	
+	/**
+	 *	Methode qui verifie si le user est authorisé (IP restrict)
+	 *	@brief	Verifie si l'utilisateur a le droit d'acceder, restriction par ip
+	 *	@return		Bool	True si peut acceder / False sinon
+	 *
+	 */
+	
+	public static function userCanAccess() {
+		$usr = $_SERVER['REMOTE_ADDR'];
+	    $tmp =  self::getConfigAccess();
+	    $accesslist = $tmp['access']['allowAdr'];
+	    
+	    if (in_array('all', $accesslist)) {
+		    return true;
+	    } elseif (in_array($usr,$accesslist)) {
+		    return true;
+		}
+		return false;
+	}
 	
 }

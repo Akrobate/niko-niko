@@ -8,28 +8,20 @@
 	 *
 	 */
 
-
 	session_start();
 	error_reporting(15);
 	require_once("./api.php");
-
 	
 	// Recuperation des parametres principaux de routage
-	$controller = request::get("controller");
-	$action = request::get("action");
+	
+	// Controller par defaut (a migrer dans un fichier de conf)s
+	$controller = request::getDefault("controller", DEFAULT_CONTROLLER);
+	// Action par defaut (a migrer dans un fichier de conf)
+	$action = request::getDefault("action", DEFAULT_ACTION);
 	$akey = request::get("auth");
 	$user = request::get("user");	
-	
-	// Controller par defaut (a migrer dans un fichier de conf)
-	if ($controller == "") {
-		$controller = DEFAULT_CONTROLLER;
-	}
-	
-	// Action par defaut (a migrer dans un fichier de conf)
-	if($action == "") {
-		$action = DEFAULT_ACTION;
-	}
-	
+
+	// On effectue une tentative de connection	
 	Auth::tryToAuth($user, $akey);
 	$permissions = acl::loadToSessionUsersACL(Auth::getUser());
 
@@ -79,7 +71,4 @@
 	} else {
 		require_once( PATH_TEMPLATES . "layouts" . PATH_SEP . "connect.php");	
 	}
-	
 
-	
-		

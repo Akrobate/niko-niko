@@ -215,9 +215,7 @@ class users extends sql {
 	 */
 	 
 	public static function getConfigAccess() {
-		if (self::$configAccess === null) {
-			self::$configAccess = parse_ini_file ("config/access.config.ini",TRUE);
-		} 
+		self::$configAccess = acl::getConfigAccess();
 		return self::$configAccess;
 	}
 	
@@ -230,16 +228,6 @@ class users extends sql {
 	 */
 	
 	public static function userCanAccess() {
-	
-		$usr = $_SERVER['REMOTE_ADDR'];
-	    $tmp =  self::getConfigAccess();
-	    $accesslist = $tmp['access']['allowAdr'];
-	    
-	    if (in_array('all', $accesslist)) {
-		    return true;
-	    } elseif (in_array($usr,$accesslist)) {
-		    return true;
-		}
-		return false;
-	}	
+		return acl::userCanAccess();
+	}
 }
