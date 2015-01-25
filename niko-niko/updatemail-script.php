@@ -1,10 +1,16 @@
 <?php
 
-	error_reporting(15);
+	/**
+	 *	Script permettant de verifier les mails et les ajouter a la base
+	 *
+	 *	@brief effectue un slimple appel au script ajax chargé de la tache
+	 *	@author	Artiom FEDOROV
+	 *
+	 */
+
 	require_once("./api.php");
 	
 	$controller="calendars";
 	$action="ajax-check";
-	require_once (PATH_SCRIPTS . $controller . "/" . $action . ".php");
 
-	exit();
+	require_once (PATH_SCRIPTS . $controller . "/" . $action . ".php");

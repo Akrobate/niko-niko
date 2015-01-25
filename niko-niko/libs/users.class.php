@@ -1,9 +1,26 @@
 <?php
 
+/**
+ *	Classe Users
+ *
+ *	@brief  chargée de gerer les utilisateurs et les votes
+ *	@author Artiom FEDOROV
+ *
+ */
+
 class users extends sql {
 
 	private static $config = null;
 	private static $configAccess = null;
+	
+	
+	/**
+	 *	Methode qui verifie si un utilisateur a le droit de participation
+	 *	
+	 *	@return bool	True si utilisateur peut ajouter, false sinon
+	 *
+	 */
+	
 	
 	public static function checkUserCanAdd($user, $date) {
 	
@@ -31,12 +48,9 @@ class users extends sql {
 		$nbr = parent::nbrRows();
 		$data = parent::allFetchArray();
 		if ($nbr > 0) {
-			
 			$query = "UPDATE days SET votedlist = CONCAT(votedlist, ',','".$usercode."') WHERE created = '".$date."'";
 			$result = parent::query($query);
-		
 		} else {
-
 			$query = "INSERT INTO days (created, votedlist) VALUES ('".$date."','".$usercode."')";
 			$result = parent::query($query);
 		}
@@ -76,6 +90,13 @@ class users extends sql {
 	}
 	
 	
+	/**
+	 *	Renvoi la liste des id des equipes aux quelles appartient
+	 *	un utilisateur passé en parametre
+	 *	
+	 *
+	 */
+	
 	
 	public static function getTeamIds($user) {
 	
@@ -86,28 +107,28 @@ class users extends sql {
 			if (in_array($user, $value['member'])) {
 				$result[] = $value['teamid'];
 			}
-		
 		}
 		return $result;
 	}
 	
 	
-	private static function getConfig() {
+	/**
+	 *	Methode qui charge le fichier de conf de l'équipe
+	 *
+	 */
 	
+	private static function getConfig() {
 		if (self::$config === null) {
 			$teamconf = parse_ini_file ("config/team.config.ini",TRUE);
 			self::$config = $teamconf;
 		} 
-		
 		return self::$config;
-		
 	}
 	
 	
 	public static function getTeams() {
 		$teamconf = self::getConfig();
 		$result = array();
-		//print_r($teamconf);
 		foreach($teamconf as $key => $value) {
 			$result[ $value['teamid'] ] = $value['teamname'];
 		}
@@ -166,6 +187,3 @@ class users extends sql {
 	}
 	
 }
-
-
-?>

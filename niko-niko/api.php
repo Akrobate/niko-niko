@@ -20,5 +20,7 @@
 	include(PATH_LIBS . "helper.class.php");
 	include(PATH_LIBS . "phpmailer/class.phpmailer.php");
 	include(PATH_LIBS . "users.class.php");
+	include(PATH_LIBS . "auth.class.php");	
+	include(PATH_LIBS . "acl.class.php");	
 	include(PATH_LIBS . "areagraph.class.php");
 	

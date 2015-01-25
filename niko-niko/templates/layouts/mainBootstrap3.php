@@ -129,12 +129,14 @@
 		      </div>
           <? endif; ?>
           
+          
             <select class="form-control" name="id" id="team-selector">
             <? foreach (users::getTeams() as $tid => $tname): ?>
 				<option value="<?=$tid?>" <? if ($tid == request::get('id')): ?>selected="selected" <? endif; ?> />
 					<?=$tname?>
 				</option>
 			<? endforeach; ?>
+
 			</select>
 			<select class="form-control" name="datamode" id="datamode-selector">
 				<option value="allvotes" <? if ("allvotes" == request::get('datamode')): ?>selected="selected" <? endif; ?> />
