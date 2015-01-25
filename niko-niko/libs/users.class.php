@@ -10,18 +10,22 @@
 
 class users extends sql {
 
+	// Fichier de config chargé dans la variable
 	private static $config = null;
+	
+	// Fichier de config Access chargé dans la variable
 	private static $configAccess = null;
 	
 	
 	/**
 	 *	Methode qui verifie si un utilisateur a le droit de participation
-	 *	
+	 *
+	 *	@param	user	string	Nom de l'utilisateur (ici mail)
+	 *	@param	date	string	Date format sql du jour
 	 *	@return bool	True si utilisateur peut ajouter, false sinon
 	 *
 	 */
-	
-	
+		
 	public static function checkUserCanAdd($user, $date) {
 	
 		$user = sql::escapeString($user);
@@ -87,6 +91,7 @@ class users extends sql {
 		$nbr = parent::nbrRows();
 		$data = parent::allFetchArray();
 		
+		// On determine si l'on fait un insert ou un update
 		if ($nbr > 0) {
 			// Mélange		
 			$allcodes = $data[0]['votedlist'];
@@ -130,7 +135,9 @@ class users extends sql {
 	
 	/**
 	 *	Methode qui charge le fichier de conf de l'équipe
+	 *
 	 *	@brief	Charge le fichier de config dans le singleton
+	 *	@return Array Config zone
 	 *
 	 */
 	
@@ -162,7 +169,9 @@ class users extends sql {
 	
 	/**
 	 *	Methode permettant d'anonymiser le username
+	 *
 	 *	@brief	Anonymise le mail pour stockage en base
+	 *	@param	user	Prend en parametre le nom de l'utilateur (mail)
 	 *	@return String	Du nom codé (ici md5)
 	 *
 	 */
@@ -175,6 +184,7 @@ class users extends sql {
 	
 	/**
 	 *	Methode permettant de renvoyer l'ensemble des utilisateurs
+	 *
 	 *	@brief	Renvoi tous les users
 	 *	@return Array des utilisateurs
 	 *
@@ -189,6 +199,7 @@ class users extends sql {
 				$outuser[] = $user;
 			}
 		}
+		
 		$outuser = array_flip($outuser);
 		$outuser = array_flip($outuser);
 		return $outuser;
@@ -197,7 +208,9 @@ class users extends sql {
 	
 	/**
 	 *	Methode permettant de verifier si un user est dans la confs
+	 *
 	 *	@brief	verifier si un user est dans la confs
+	 *	@param	user	Prend en parametre le nom de l'utilateur (mail)	 
 	 *	@return Bool True si dans la conf / false sinon
 	 *
 	 */
@@ -211,6 +224,7 @@ class users extends sql {
 	/**
 	 *	Methode qui charge le fichier de conf Access de l'appli
 	 *	@brief	Charge le fichier de config Access dans le singleton
+	 *	@detail	alias pour la methode se situant dans la classe acl
 	 *
 	 */
 	 
@@ -222,7 +236,9 @@ class users extends sql {
 	
 	/**
 	 *	Methode qui verifie si le user est authorisé (IP restrict)
+	 *
 	 *	@brief	Verifie si l'utilisateur a le droit d'acceder, restriction par ip
+	 *	@detail	alias pour la methode se situant dans la classe acl
 	 *	@return		Bool	True si peut acceder / False sinon
 	 *
 	 */

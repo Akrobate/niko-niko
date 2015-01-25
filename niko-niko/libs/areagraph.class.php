@@ -5,7 +5,7 @@
  * 
  *	@brief		Graphiques avec des zones de surface
  *
- * @author		Artiom FEDOROV
+ *	@author		Artiom FEDOROV
  *
  */
  
@@ -32,6 +32,12 @@ class AreaGraph {
 	public $imageColorsArray;
 
 
+	/**
+	 *	Methode constructeur et initialisation
+	 *	@brief	Constructeur
+	 *
+	 */
+	 
 	function __construct() {
 	
 		$this->width = 600;
@@ -66,6 +72,7 @@ class AreaGraph {
 	/**
 	 *	Methode d'initilisation
 	 *	
+	 *	@return void
 	 */
 
 	public function init() {
@@ -76,6 +83,15 @@ class AreaGraph {
 	}
 	
 	
+	/**
+	 *	Methode setteur pour le titre
+	 *	
+	 *	@brief set le titre sur l'image avec une fonte en dur
+	 *	@detail	Position le titre dans l'image selon des coordonnées
+	 *	@return void
+	 *
+	 */
+	 
 	public function setTitle($str) {
 		$font_file = PATH_FONTS . "OptimusPrincepsSemiBold.ttf";
 			
@@ -86,28 +102,43 @@ class AreaGraph {
 	}
 	
 	
+	/**
+	 *	Methode getteur pour l'image
+	 *
+	 *	@brief Getteur pour l'image
+	 *	@return Renvoie l'image 
+	 *
+	 */
+	 
 	public function getImage() {
 		return $this->image;
 	}
 
 
-	// 0 = red
-	// 1 = yellow
-	// 2 = green
-	// $data[x][classe] = nbr
+
+
+	/**
+	 *	Methode qui dessine toute la data
+	 *	
+	 *	@param	data	Prend en parametre l'ensemble des datas
+	 *	@detail Encodage couleurs est le suivant
+	 *			// 0 = red
+	 *			// 1 = yellow
+	 *			// 2 = green
+	 *			// $data[x][classe] = nbr
+	 *	@return void
+	 *
+	 */
 
 
 	public function drawData($data) {
-	
+
 		$count = count($data);
-		
 		$i = 0;
-		
 		while ($i < ($count-1)) {
 		
 			$item1 = $data[$i];
 			$item2 = $data[$i+1];
-
 			$LastValue1 = 0;
 			$LastValue2 = 0;
 			
@@ -122,20 +153,31 @@ class AreaGraph {
 				$LastValue1 += $item1[$key];
 				$LastValue2 += $item2[$key];
 				imagefilledpolygon($this->image, $values, count( $values ) / 2, $this->imageColorsArray[$key]);
-				
 			}
 			$i++;
 		}
-		
 	}
 	
 	
+	/**
+	 *	Empty
+	 *	@todo: investiguer
+	 *
+	 */
+	 
 	public function adaptValMaxFromData() {
 	
 	}
 
 
-
+	/**
+	 *	Methode qui dessine la grille dans l'image
+	 *
+	 *	@details cette methode couvre les absices et les ordonnées	
+	 *	@return void
+	 *
+	 */
+	 
 	public function drawGrid() {
 			
 		$marginSizeX = $this->marginSizeX;
@@ -147,9 +189,16 @@ class AreaGraph {
 	}
 
 
+	/**
+	 *	Methode qui dessine les graduations de la grille dans l'image
+	 *
+	 *	@details cette methode couvre les absices et les ordonnées
+	 *	@return void
+	 *
+	 */
+	 
 	public function drawGridGraudation() {
 			
-		
 		$nbrX = (int) (( $this->valMaxX / $this->resolutionX ) + 1 );
 		$nbrY = (int) (( $this->valMaxY / $this->resolutionY ) + 1 );
 			

@@ -9,7 +9,10 @@
 
 class acl {
 
+	// Datas Array du fichier de config
 	private static $config = null;
+	
+	// Datas Array du fichier de config Access
 	private static $configAccess = null;
 
 
