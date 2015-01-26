@@ -11,13 +11,22 @@
  
 class AreaGraph {
 
+	// Largeur de l'image en px
 	public $width;
+
+	// Hauteur de l'image en px
 	public $heigh;
 
+	// Pointeur pour le handler de l'image
 	public $image;
+	
+	// pourcentage reservé a la marge
 	public $marginPercent;
 
+	// couleur de la grille
 	public $gridColor;
+	
+	// Couleur de l'arriere plan
 	public $bgColor;
 
 	public $valMaxX;
@@ -25,7 +34,8 @@ class AreaGraph {
 
 	public $resolutionX;
 	public $resolutionY;
-	
+
+	// Boulean montrer la graduation ou pas	
 	public $showGraduation;
 
 	//colors
@@ -159,17 +169,6 @@ class AreaGraph {
 	}
 	
 	
-	/**
-	 *	Empty
-	 *	@todo: investiguer
-	 *
-	 */
-	 
-	public function adaptValMaxFromData() {
-	
-	}
-
-
 	/**
 	 *	Methode qui dessine la grille dans l'image
 	 *

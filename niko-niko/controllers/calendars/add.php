@@ -34,7 +34,7 @@
 				OrmSmiley::addSmile($item);
 				
 				// On ajoute le vote
-				users::addVoteDay($user, $date);
+				OrmSmiley::addVoteDay($user, $date);
 			}
 		}
 		

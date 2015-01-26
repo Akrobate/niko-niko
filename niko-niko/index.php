@@ -14,9 +14,10 @@
 	
 	// Recuperation des parametres principaux de routage
 	
-	// Controller par defaut (a migrer dans un fichier de conf)s
+	// Controller par defaut
 	$controller = request::getDefault("controller", DEFAULT_CONTROLLER);
-	// Action par defaut (a migrer dans un fichier de conf)
+	
+	// Action par defaut
 	$action = request::getDefault("action", DEFAULT_ACTION);
 	$akey = request::get("auth");
 	$user = request::get("user");	
@@ -27,7 +28,7 @@
 
 
 	// Verification des droits utilisateurs courant
-	if (users::userCanAccess()) {
+	if (acl::userCanAccess()) {
 
 		/**
 		 *	Brique principale de routage

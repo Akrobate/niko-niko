@@ -49,10 +49,10 @@
 					// On ajoute l'element
 					OrmSmiley::addSmile($item);
 					
-					//users::addVoteDay($user, $date);
+					//OrmSmiley::addVoteDay($user, $date);
 					
 					// On ajout le vote en melangeant l'ordre des utilisateurs pour plus d'anonymat
-					users::addVoteDayAndShuffle($user, $date);
+					OrmSmiley::addVoteDayAndShuffle($user, $date);
 
 					// Fabrication de l'email - On previent l'utilisateur	
 					$d['to'] = $user;

@@ -73,4 +73,74 @@ class OrmSmiley extends sql {
 		$query = "INSERT INTO smiles (".$str_cols.") VALUES (".$str_values.");";				
 		parent::query($query);
 	}
+	
+	
+	
+	/**
+	 *	Methode ajoute le vote d'un utilisateur
+	 *	
+	 *	@brief	Ajoute un vote d'utilisateur
+	 *	@param	user	string	Nom de l'utilisateur (ici mail)
+	 *	@param	date	string	Date format sql du jour
+	 *	@return void
+	 *
+	 */
+	
+	public static function addVoteDay($user, $date) {
+	
+		$user = sql::escapeString($user);
+		$usercode = users::encodeUserName($user);
+		$query = "SELECT * FROM days WHERE created='".$date."'";
+		$result = parent::query($query);
+		$nbr = parent::nbrRows();
+		$data = parent::allFetchArray();
+		if ($nbr > 0) {
+			$query = "UPDATE days SET votedlist = CONCAT(votedlist, ',','".$usercode."') WHERE created = '".$date."'";
+			$result = parent::query($query);
+		} else {
+			$query = "INSERT INTO days (created, votedlist) VALUES ('".$date."','".$usercode."')";
+			$result = parent::query($query);
+		}
+		
+	}
+
+	
+	/**
+	 *	Methode ajoute le vote d'un utilisateur
+	 *	Methode assurant l'anonymat en melangeant a chaque ajout la votelist
+	 *
+	 *	@brief	Ajoute un vote d'utilisateur
+	 *	@param	user	string	Nom de l'utilisateur (ici mail)
+	 *	@param	date	string	Date format sql du jour
+	 *	@return void
+	 *
+	 */
+	 
+	public static function addVoteDayAndShuffle($user, $date) {
+	
+		$user = sql::escapeString($user);
+		$usercode = users::encodeUserName($user);
+		$query = "SELECT * FROM days WHERE created='".$date."'";
+		$result = parent::query($query);
+		$nbr = parent::nbrRows();
+		$data = parent::allFetchArray();
+		
+		// On determine si l'on fait un insert ou un update
+		if ($nbr > 0) {
+			// Mélange		
+			$allcodes = $data[0]['votedlist'];
+			$allcodesArr = explode(",",$allcodes);
+			$allcodesArr[] = $usercode;
+			shuffle($allcodesArr);
+			$allcodes = implode("," , $allcodesArr);
+			$query = "UPDATE days SET votedlist = '".$allcodes."' WHERE created = '".$date."'";
+			$result = parent::query($query);
+		
+		} else {
+
+			$query = "INSERT INTO days (created, votedlist) VALUES ('".$date."','".$usercode."')";
+			$result = parent::query($query);
+		}
+		
+	}	
 }

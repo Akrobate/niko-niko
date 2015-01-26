@@ -10,7 +10,7 @@
 
 
 	// Récupération des paramètres	
-	$team = request::get('id');
+	$team = request::getDefault('id', DEFAULT_TEAM);
 	$periode = request::get('periode');
 	
 	// Positionnemment des valeurs par défaut
@@ -48,40 +48,61 @@
 	$calendar->setStartOfWeek('Monday');
 	$periode_indicator = $month_str;
 	
-	// réglage de la valeur team par défaut
-	if ($team == "") {
-    	$team = DEFAULT_TEAM; // si pas de param alors equipe id=1 par defaut
-	}
   
+  	// On recupere les parametres
 	$datamode = request::get('datamode');
+	
+	// On recupere toutes les equipes
 	$teams = users::getTeams();
+	
+	// On récupère les noms d'équipes
 	$teamName = $teams[$team];
+	
+	// On récupere l'ensemble des smiley sur une périodes
 	$data = OrmSmiley::getAllSmileysFromPeriode($team, $datefrom, $dateto);
 
-	// Définition du mode de calcul : ici mode moyenne
+	/**
+	 *  Définition du mode de calcul : ici mode moyenne
+	 *	Mode datamode = average
+	 *
+	 */
+	 
 	if ($datamode != 'average') {
 		if (count($data)) {
 			foreach($data as $date=>$smiles) {
 				$ht = "";
+				// On parcour l'ensemle des smiley de ce jour
 				foreach($smiles as $smile) {
 					$ht .= MySmiley::getHtmlSmile($smile['smileycode'], false);
 				}
+				// Ajout au calendrier
 				$calendar->addDailyHtml($ht ,  $date, $date  );
 			}
 		}
 		
-	// On affiche tout, plus seulement la moyenne
-	} else {
 	
+	/**
+	 *  Définition du mode de calcul
+	 *	On affiche tout, plus seulement la moyenne
+	 *	Mode datamode = all
+	 *
+	 */	
+	} else {
+
 		foreach($data as $date=>$smiles) {
 			$ht = "";
 			$smilescore = 0;
 			foreach($smiles as $smile) {
 				$smilescore += $smile['smileycode'];
 			}
-		
+			
+			// Calcul de la moyenne	
 			$smileaverage = $smilescore / count($smiles);		
+			
+			// rendu du smiley 
 			$ht = MySmiley::getHtmlSmile(MySmiley::getRoundedScore($smileaverage), false);
+			
+			// Ajout au calendrier
 			$calendar->addDailyHtml($ht ." <span style=\"color: black\"> ". (int)$smileaverage ." </span> ",  $date, $date  );
 		}
 	}

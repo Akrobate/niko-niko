@@ -44,74 +44,6 @@ class users extends sql {
 	
 	
 	/**
-	 *	Methode ajoute le vote d'un utilisateur
-	 *	
-	 *	@brief	Ajoute un vote d'utilisateur
-	 *	@param	user	string	Nom de l'utilisateur (ici mail)
-	 *	@param	date	string	Date format sql du jour
-	 *	@return void
-	 *
-	 */
-	
-	public static function addVoteDay($user, $date) {
-	
-		$user = sql::escapeString($user);
-		$usercode = self::encodeUserName($user);
-		$query = "SELECT * FROM days WHERE created='".$date."'";
-		$result = parent::query($query);
-		$nbr = parent::nbrRows();
-		$data = parent::allFetchArray();
-		if ($nbr > 0) {
-			$query = "UPDATE days SET votedlist = CONCAT(votedlist, ',','".$usercode."') WHERE created = '".$date."'";
-			$result = parent::query($query);
-		} else {
-			$query = "INSERT INTO days (created, votedlist) VALUES ('".$date."','".$usercode."')";
-			$result = parent::query($query);
-		}
-		
-	}
-	
-	
-	/**
-	 *	Methode ajoute le vote d'un utilisateur
-	 *	Methode assurant l'anonymat en melangeant a chaque ajout la votelist
-	 *
-	 *	@brief	Ajoute un vote d'utilisateur
-	 *	@param	user	string	Nom de l'utilisateur (ici mail)
-	 *	@param	date	string	Date format sql du jour
-	 *	@return void
-	 *
-	 */
-	public static function addVoteDayAndShuffle($user, $date) {
-	
-		$user = sql::escapeString($user);
-		$usercode = self::encodeUserName($user);
-		$query = "SELECT * FROM days WHERE created='".$date."'";
-		$result = parent::query($query);
-		$nbr = parent::nbrRows();
-		$data = parent::allFetchArray();
-		
-		// On determine si l'on fait un insert ou un update
-		if ($nbr > 0) {
-			// Mélange		
-			$allcodes = $data[0]['votedlist'];
-			$allcodesArr = explode(",",$allcodes);
-			$allcodesArr[] = $usercode;
-			shuffle($allcodesArr);
-			$allcodes = implode("," , $allcodesArr);
-			$query = "UPDATE days SET votedlist = '".$allcodes."' WHERE created = '".$date."'";
-			$result = parent::query($query);
-		
-		} else {
-
-			$query = "INSERT INTO days (created, votedlist) VALUES ('".$date."','".$usercode."')";
-			$result = parent::query($query);
-		}
-		
-	}
-	
-	
-	/**
 	 *	Renvoi la liste des id des equipes aux quelles appartient
 	 *	un utilisateur passé en parametre
 	 *	@param	user	string	Nom de l'utilisateur (mail)
@@ -231,19 +163,5 @@ class users extends sql {
 	public static function getConfigAccess() {
 		self::$configAccess = acl::getConfigAccess();
 		return self::$configAccess;
-	}
-	
-	
-	/**
-	 *	Methode qui verifie si le user est authorisé (IP restrict)
-	 *
-	 *	@brief	Verifie si l'utilisateur a le droit d'acceder, restriction par ip
-	 *	@detail	alias pour la methode se situant dans la classe acl
-	 *	@return		Bool	True si peut acceder / False sinon
-	 *
-	 */
-	
-	public static function userCanAccess() {
-		return acl::userCanAccess();
 	}
 }

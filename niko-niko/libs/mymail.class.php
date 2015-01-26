@@ -18,7 +18,9 @@ class MyMail {
 
 
 	/**
+	 * @detail		Réalise la conf de l'objet par la meme occasion
 	 * @brief		Constructeur 
+	 *	
 	 */
 	 
 	function __construct() {		
@@ -80,8 +82,9 @@ class MyMail {
 	public function getAllAndRemove($realydelete = true) {
 		$res = array();
 
-		/* try to connect */
-		$inbox = imap_open($this->hostname,$this->username,$this->password)
+		/**
+		 * try to connect */
+		$inbox = imap_open($this->hostname, $this->username, $this->password)
 			or die('Cannot connect to mailbox: ' . imap_last_error());
 			
 		$emails = imap_search($inbox,'ALL');
@@ -127,13 +130,10 @@ class MyMail {
 		$mbox = $inbox;
 		
 		$check = imap_mailboxmsginfo($mbox);
-		//echo "Nombre de messages avant effacement : " . $check->Nmsgs . "<br />\n";
 		imap_delete($mbox, $num);
 		$check = imap_mailboxmsginfo($mbox);
-		//echo "Nombre de messages après effacement : " . $check->Nmsgs . "<br />\n";
 		imap_expunge($mbox);
 		$check = imap_mailboxmsginfo($mbox);
-		//echo "Nombre de messages après imap_expunge : " . $check->Nmsgs . "<br />\n";
 		
 		imap_close($mbox);
 	}
@@ -212,18 +212,17 @@ class MyMail {
 		
 		$mail = new PHPMailer();
 		$mail->IsSMTP();
-		$mail->Host = "ssl://smtp.gmail.com"; 
 		$mail->SMTPDebug = 1;                     
-        // 2 = messages only
+
 		$mail->SMTPAuth = true;
 		$mail->SMTPSecure = "ssl";
 		$mail->Host = "smtp.gmail.com";
 		$mail->Port = 465;
 
-		$mail->Username   = $this->username; 
-		$mail->Password   = $this->password;
+		$mail->Username = $this->username; 
+		$mail->Password = $this->password;
 	
-		$fromMail =  $this->username;	
+		$fromMail = $this->username;	
 		$toMail = $to;
 		
 		$mail->SetFrom($fromMail, "Niko-Niko");		
